@@ -1,3 +1,3 @@
 @echo off
-python ipgw.py -o 20144633
+python ipgw.py -o <your-user-name>
 pause
