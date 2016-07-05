@@ -6,7 +6,7 @@
   > 请搜索Python官网，在Download页面选择下载Python3.5的Windows版本的安装包安裝
 
   > 安裝完成后將python及pip的路径添加到系统的Path变量中
-  
+
   > 使用命令 `pip install requests` 安装requests
 
 - 在本地新建文件夹，将本目录中的文件保存到文件夹中
