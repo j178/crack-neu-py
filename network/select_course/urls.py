@@ -6,11 +6,11 @@ BASE_URL = 'http://202.118.31.243:8080/{}.XKAPPPROCESS'
 # login - POST - 登陆
 LOGIN_URL = BASE_URL.format('LOGIN_LOGININ')  # post
 
-# user_info - GET - 用户能选课程的通用参数
+# user_info - GET - 查询条件设置页面,后面会根据设置的条件来请求task
 COURSE_COMMON_INFO_URL = BASE_URL.format('XK_DISPLEFTFRAME')
 
-# course_list - GET - 可选课程列表
-COURSE_LIST_URL = BASE_URL.format('XK_QUERYCOURSE')
+# query_course - GET - 按条件获取课程列表
+QUERY_COURSE_URL = BASE_URL.format('XK_QUERYCOURSE')
 
 # task_info - GET - 教师列表
 # 参数 CourseNO MajorLevel GradeYear MajorNO CourseModelID IfNeed

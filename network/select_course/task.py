@@ -7,6 +7,10 @@ import re
 
 class Task(Base):
     def __init__(self, session, *data, **kwargs):
+        self._task_id = None
+        self._teacher = None
+        self._description = None
+
         Base.__init__(self, session, *data, **kwargs)
 
     @property
@@ -30,9 +34,11 @@ class Task(Base):
         请求task的信息
         :return:
         """
+        # todo
         html = self._session.get(TASK_TURN_URL, {'XKTaskID': self.task_id})
         text = html.text
 
+    # todo 多线程抢课,错误处理
     def select(self):
         """
         选择课程

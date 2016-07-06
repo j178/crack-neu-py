@@ -7,15 +7,60 @@ import re
 
 
 class Course(Base):
+    # 一个用户不变的一些信息
+    major_level = None
+    grade_year = None
+    major_num = None
+    if_need = None
+    # 上述默认属性是否设置
+    _default_set = False
+
     def __init__(self, session, *data, **kwargs):
-        # todo super(Course,self).__init__与这个写法有什么区别？
+        self._name = None
+        self._type = None
+        self._course_num = None
+        self._course_model_id = None
         Base.__init__(self, session, *data, **kwargs)
+
+    @classmethod
+    def set_init_attr(cls, data):
+        """
+        设置类的公共属性
+
+        :param dict data: 公共信息
+        """
+        for key in data:
+            setattr(cls, key, data[key])
+
+        cls._default_set = True
+
+    @classmethod
+    def is_init_set(cls):
+        """
+        测试当前类的初始属性是否设置
+        :return: bool
+        """
+        return cls._default_set
 
     @property
     def tasks(self):
-        self._common_attr.update({'CourseNO': self.id, 'CourseModelID': self.mode_id})
+        """
+        获取课程对应的老师列表
+
+        :return: generate Task对象
+        :rtype generator of Task
+        """
+        params = {
+            'CourseNO'     : self._course_num,
+            'CourseModelID': self._course_model_id,
+            'MajorLevel'   : Course.major_level,
+            'GradeYear'    : Course.grade_year,
+            'MajorNO'      : Course.major_num,
+            'IfNeed'       : Course.if_need
+        }
+
         # todo 缓存
-        html = self._session.get(TASK_INFO_URL, params=self._common_attr)
+        html = self._session.get(TASK_INFO_URL, params=params)
         text = html.text
 
         pattern = r'<td nowrap.*?\'(?P<_task_id>.*?)\'.*?' \
@@ -26,26 +71,9 @@ class Course(Base):
             yield Task(self._session, r.groupdict())
 
     @property
-    def id(self):
-        return self._id
-
-    @property
-    def mode_id(self):
-        return self._mode_id
-
-    @property
     def name(self):
         return self._name
 
     @property
     def type(self):
         return self._type
-
-    @property
-    def common_attr(self):
-        return self._common_attr
-
-    # 没有定义这个连类的内部也无法创建属性吗？
-    @common_attr.setter
-    def common_attr(self, value):
-        self._common_attr = value
