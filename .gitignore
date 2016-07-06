@@ -1,0 +1,32 @@
+# Created by .ignore support plugin (hsz.mobi)
+### Example user template template
+### Example user template
+
+# IntelliJ project files
+.idea
+out
+gen
+algorithm/
+flaskDemo/
+learn/
+network/WechatVote.py
+network/baidu.html
+network/find-rss.py
+network/ipgw-login.py
+network/math_exam_system/
+network/neu/aao/
+network/qrcode.jpg
+network/requests_test.py
+network/scraptest.py
+network/test.py
+network/test1.py
+network/vote/
+network/wdf.py
+network/wechat.html
+plot/
+pythonds/
+socketDemo/
+network/neu/ipgw/ipgw-self.py
+/network/select_course/analysis/*
+network/__init__.py
+network/__pycache__/
