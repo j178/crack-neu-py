@@ -28,5 +28,4 @@ pythonds/
 socketDemo/
 network/neu/ipgw/ipgw-self.py
 /network/select_course/analysis/*
-network/__init__.py
 network/__pycache__/
