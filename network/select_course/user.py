@@ -25,6 +25,7 @@ class User:
         self._major = None
         self._grade = None
         self._class_ = None
+        self._courses = []
 
     # todo 多线程同时抢滩登陆
     def login(self):
@@ -95,8 +96,7 @@ class User:
             # retry
             pass
 
-    @property
-    def courses(self, if_need='-1', course_kind4='-1', course_name='', course_mode_id=None):
+    def _get_courses(self, if_need='-1', course_kind4='-1', course_name='', course_mode_id=None):
         """
         根据查询条件获取可选课程
 
@@ -152,7 +152,14 @@ class User:
                   r'nowrap.*?>(?P<_type>.+?)</td>'
 
         for p in re.finditer(pattern, text, re.DOTALL):
-            yield Course(self._session, p.groupdict())
+            self._course.append(Course(self._session, p.groupdict()))
+
+    @property
+    def courses(self, if_need='-1', course_kind4='-1', course_name='', course_mode_id=None):
+        # 第一次体会到了封装的真正含义，内部接口负责获取数据，外部接口决定如何向外部提供数据
+        if not self._courses:
+            self._get_courses(if_need, course_kind4, course_name, course_mode_id)
+        return self._courses
 
     @property
     def name(self):

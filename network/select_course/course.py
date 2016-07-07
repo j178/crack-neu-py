@@ -7,12 +7,12 @@ import re
 
 
 class Course(Base):
-    # 一个用户不变的一些信息
+    # 用户不变的一些信息
     major_level = None
     grade_year = None
     major_num = None
     if_need = None
-    # 上述默认属性是否设置
+    # 上述默认属性是否已设置
     _default_set = False
 
     def __init__(self, session, *data, **kwargs):
@@ -20,6 +20,7 @@ class Course(Base):
         self._type = None
         self._course_num = None
         self._course_model_id = None
+        self._tasks = []
         Base.__init__(self, session, *data, **kwargs)
 
     @classmethod
@@ -27,7 +28,7 @@ class Course(Base):
         """
         设置类的公共属性
 
-        :param dict data: 公共信息
+        :param dict data: 公共属性
         """
         for key in data:
             setattr(cls, key, data[key])
@@ -42,8 +43,7 @@ class Course(Base):
         """
         return cls._default_set
 
-    @property
-    def tasks(self):
+    def _get_tasks(self):
         """
         获取课程对应的老师列表
 
@@ -68,7 +68,13 @@ class Course(Base):
                   r'<span.*?>(?P<_description>.*?)&nbsp'
 
         for r in re.finditer(pattern, text, re.DOTALL):
-            yield Task(self._session, r.groupdict())
+            self._tasks.append(Task(self._session, r.groupdict()))
+
+    @property
+    def tasks(self):
+        if not self._tasks:
+            self._get_tasks()
+        return self._tasks
 
     @property
     def name(self):

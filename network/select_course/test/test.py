@@ -11,5 +11,6 @@ if __name__ == '__main__':
             # print(c.id, c.name, c.type)
             for t in c.tasks:
                 print(c.name, t.task_id, t.teacher, t.description)
+                print(t.schedule)
     else:
         print(msg)

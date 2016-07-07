@@ -6,7 +6,7 @@ BASE_URL = 'http://202.118.31.243:8080/{}.XKAPPPROCESS'
 # login - POST - 登陆
 LOGIN_URL = BASE_URL.format('LOGIN_LOGININ')  # post
 
-# user_info - GET - 查询条件设置页面,后面会根据设置的条件来请求task
+# user_info - GET - 查询条件设置页面 后面会根据设置的条件来请求task
 COURSE_COMMON_INFO_URL = BASE_URL.format('XK_DISPLEFTFRAME')
 
 # query_course - GET - 按条件获取课程列表
