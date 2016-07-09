@@ -11,9 +11,9 @@ network/scraptest.py
 network/vote/
 network/wdf.py
 network/neu/ipgw/ipgw-self.bat
-network/select_course/analysis/*
+network/auto-snatch-course/analysis/*
 network/__pycache__/
 plot/
 pythonds/
 socketDemo/
-network/select_course/__pycache__/
+network/auto-snatch-course/__pycache__/

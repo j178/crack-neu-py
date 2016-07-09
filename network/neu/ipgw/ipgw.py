@@ -29,6 +29,7 @@ def login(username, password):
 
     :param str username: 学号
     :param str password: 密码
+    :returns bool 登陆是否成功 str 错误消息
     """
     data = {
         'action'  : 'login',
@@ -53,12 +54,11 @@ def login(username, password):
         print('已用时长: {:.2f} h'.format(float(info[1]) / 3600))
         print('帐户余额:', info[2])
         print('IP地址:', info[5])
-        return True
+        return True, ''
     else:
         msg = re.search(r'<input.*?name="url".*?<p>(.*?)</p>', r.text, re.DOTALL)
         if msg:
-            print(msg.group(1))
-        return False
+            return False, msg.group(1)
 
 
 def logout(username):
@@ -82,6 +82,15 @@ def logout(username):
 if __name__ == '__main__':
 
     if sys.argv[1] == '-i':
-        login(sys.argv[2], sys.argv[3])
+        r, msg = login(sys.argv[2], sys.argv[3])
+        while not r:
+            print(msg)
+            yes = input('是否断开所有连接并重新登陆(y/n)?')
+            if yes.lower == 'y':
+                logout(sys.argv[2])
+                r, msg = login(sys.argv[2], sys.argv[3])
+            else:
+                break
+
     elif sys.argv[1] == '-o':
         logout(sys.argv[2])
