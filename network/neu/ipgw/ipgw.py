@@ -61,16 +61,20 @@ def login(username, password):
             return False, msg.group(1)
 
 
-def logout(username):
+def logout(username, password=''):
     """
     登出IP网关
-
-    :param str username:
+    因为一个账号可以在多个IP处登陆，所以一个账号对应多个IP
+    '断开连接'的意思是，将当前IP从连接中断开, '断开全部链接'是指将当前账号对应的所有IP都断开。
+    在管理页面的'下线'功能也是将IP断开。
+    移动页面的'注销'是指'断开所有链接', 即将账号对应的所有链接都断开。
+    :param password:
+    :param str username: 断开全部链接时需要
     """
     data = {
         'action'  : 'logout',
         'username': username,
-        'password': '',
+        'password': password,
         'ajax'    : '1'
     }
 
@@ -85,9 +89,9 @@ if __name__ == '__main__':
         r, msg = login(sys.argv[2], sys.argv[3])
         while not r:
             print(msg)
-            yes = input('是否断开所有连接并重新登陆(y/n)?')
-            if yes.lower == 'y':
-                logout(sys.argv[2])
+            yes = input('是否断开此账号的所有连接并重新登陆(y/n)?')
+            if yes.lower() == 'y':
+                logout(sys.argv[2], sys.argv[3])
                 r, msg = login(sys.argv[2], sys.argv[3])
             else:
                 break
